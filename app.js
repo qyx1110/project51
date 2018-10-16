@@ -2,16 +2,20 @@
 
 //1.导包
 const express = require('express');
+const bodyParser = require('body-parser');
+const router = require('./router');
 
-//2.app对象
 const app = express();
 
-//3.监听请求
-app.get('/signin',(req,res)=>{
-    res.send('app.js监听请求并且实现处理函数');
-})
+app.engine('html',require('express-art-template'));
+app.use('/public',express.static('./public'));
+app.use('/node_modules',express.static('./node_modules'));
+app.use(bodyParser.urlencoded({
+    extended: false
+}));
 
-//绑定端口
+app.use(router);
+
 app.listen(12345,()=>{
-    console.log('success---');
+    console.log('success----');
 })
